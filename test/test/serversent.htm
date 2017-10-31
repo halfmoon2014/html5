@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+ 
+<head>
+<meta charset="UTF-8">
+</head>
+<body onload="init()">
+    <button onClick="quit()">退出</button>
+    <div id="msg" style="border:1px dashed #c3c3c3;"></div>
+</body>
+</html>
+<script type="text/javascript">
+    //声明一个EventSource:source;
+    var source;
+    //初始化调用方法
+    function init() {
+        var url = "demo_sse.aspx";
+
+        source = new EventSource(url);
+        try {
+            source.onopen = function (event) {
+                p("连接已经建立，状态号：" + this.readyState);
+            }
+            source.onmessage = function (event) {
+                p('客户端收到服务器推送的数据是：' + event.data);
+            }
+            source.onerro = function (event) {
+                p("出错，信息状态号是：" + this.readyState);
+            }
+        } catch (err) {
+            alert('出错啦，错误信息：' + err.message);
+        }
+
+    }
+    //退出方法，关闭EventSource
+    function quit() {
+        p("已经成功退出啦！");
+        source.close();
+        source = null;
+    }
+    //信息输出方法
+    function p(msg) {
+        document.getElementById("msg").innerHTML += "<br/>" + msg;
+    }
+</script>

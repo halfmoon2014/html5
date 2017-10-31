@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+ 
+<head>
+<title>Jack张WebSocket实例</title>
+
+<style type="text/css">
+html,body{font:normal 14px;margin:0 auto;}
+#log {width:440px; 
+            height:270px; 
+            text-align:left;
+            overflow:auto;margin:0px auto;
+            font-weight:bold; 
+            }
+#msg {width:330px;margin:0px auto;}
+#imagebg{
+  
+    background-repeat: no-repeat;
+    background-position: center top;
+    height:643px;
+    overflow:hidden;
+    text-align:center;
+    padding-top:120px;
+}
+
+</style>
+
+<script>
+    //声明一个socket
+    var socket;
+    //初始化方法
+    function init() {
+        var host = "ws://echo.websocket.org/"; //声明host注意：是ws协议
+        try {
+            socket = new WebSocket(host); //新创建一个socket对象
+            log('WebSocket - status ' + socket.readyState); //将连接的状态信息显示在log
+            socket.onopen = function (msg) { log("Welcome - status " + this.readyState); }; //监听打开连接
+            socket.onmessage = function (msg) { log("Received: " + msg.data); }; //监听当接收信息时触发匿名函数
+            socket.onclose = function (msg) { log("Disconnected - status " + this.readyState); }; //关闭连接
+        }
+        catch (ex) { log(ex); }
+        $("msg").focus();
+    }
+    //声明一个发送信息方法
+    function send() {
+        var txt, msg;
+        txt = $("msg");
+        msg = txt.value;
+        if (!msg) { alert("Message can not be empty"); return; }
+        txt.value = "";
+        txt.focus();
+        try { socket.send(msg); log('Sent: ' + msg); } catch (ex) { log(ex); }
+    }
+    //声明一个对开连接，关闭socket方法
+    function quit() {
+        log("Goodbye!");
+        socket.close();
+        socket = null;
+    }
+
+    // 根据id获取DOM元素
+    function $(id) { return document.getElementById(id); }
+    //将信息显示在id为log的div中
+    function log(msg) { $("log").innerHTML += "<br>" + msg; }
+    //键盘事件（回车）
+    function onkey(event) { if (event.keyCode == 13) { send(); } }
+</script>
+
+</head>
+<body onload="init()">
+<div id="imagebg">
+    <div style="width:520px;text-align:left;margin:0px auto;color:#000;"> <a href="http://weibo.com/jackyo"><strong>新浪微博：Jack张</strong></a> </div>
+    <br>
+     <div id="log"></div>
+     <input id="msg" type="textbox" onkeypress="onkey(event)"/>
+     <button onclick="send()">发送</button>
+     <button onclick="quit()">断开</button>
+
+</div>
+</body>
+</html>

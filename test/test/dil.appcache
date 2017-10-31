@@ -1,0 +1,15 @@
+CACHE MANIFEST
+
+# VERSION 0.3
+
+# 直接缓存的文件
+CACHE:
+img/w3school_banner.gif
+../js/cache.js
+
+# 需要在时间在线的文件
+NETWORK:
+
+
+# 替代方案
+FALLBACK:

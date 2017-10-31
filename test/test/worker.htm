@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+ 
+<head>
+<meta charset="UTF-8">
+    
+<script type="text/javascript">
+
+    //声明一个worker;
+    var worker;
+    //初始化调用方法
+    function init() {
+        if (window.Worker) {
+            worker = new Worker('../js/worker.js');
+            worker.onmessage = function (event) {
+                p(event.data);
+            };
+            worker.postMessage(true);
+        } else {
+            alert("浏览器不支持Web Workers!");
+        }
+    }
+
+    //退出方法，关闭EventSource
+    function quit2() {
+        worker.postMessage(false);
+        worker.terminate();
+        worker = null;
+    }
+    function ydk() {
+        worker = new Worker('../js/worker.js');
+        worker.onmessage = function (event) {
+            p(event.data);
+        };
+        worker.postMessage(true);
+    }
+    //信息输出方法
+    function p(msg) {
+        document.getElementById("msg").innerHTML += "<br/>" + msg;
+    }
+</script>
+</head>
+<body onload="init()">
+    <button onClick="quit2()">退出</button>
+    <button onClick="ydk()">退出2</button>
+    <div id="msg" style="border:1px dashed #c3c3c3;"></div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" mainfest="test.appcache">
+<head>
+    <title></title>
+    <script type="text/javascript" src="../js/jquery-1.7.1.min.js" ></script>  
+<style type="text/css">
+#div1 {width:488px;height:70px;padding:10px;border:1px solid #aaaaaa;}
+#div2 {width:488px;height:70px;padding:10px;border:1px solid #aaaaaa;}
+</style>
+<script type="text/javascript">
+    function isEventCancelable(event) {
+        alert(event.cancelable);
+    }
+</script>
+
+</head>
+<body >
+    <div>
+        <input type="button" value="暂停/开始" onclick="playPause()" />
+    </div>
+    视频
+    <div>
+        <video id="myVideo"  src="testaok.mp4"  preload controls="controls">  
+        Your browser does not support the audio tag.       
+        </video>
+    </div>
+    音频
+    <div>
+        <audio src="鸽子情缘.mp3" controls="controls">  
+        Your browser does not support the audio tag.  
+        </audio>
+    </div>
+    <div>
+        <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+        </div>
+        <img id="drag1" src="../test/img/w3school_banner.gif" draggable="true" ondragstart="drag(event)"  />
+        <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    //draggable="true" ondragstart="drag(event)
+    function allowDrop(ev) {
+        if (ev && ev.preventDefault) {
+            ev.preventDefault();            
+        } else {
+            window.event.returnValue = false;
+        }
+    }
+
+    function drag(ev) {
+        ev.dataTransfer.setData("Text", ev.target.id);
+    }
+
+    function drop(ev) {
+
+        if (ev && ev.preventDefault) {            
+            ev.preventDefault();
+            ev.stopPropagation();//FF下调用
+        } else {
+            window.event.returnValue = false;
+        }
+        var data = ev.dataTransfer.getData("Text");
+        //$(ev.target).append(document.getElementById(data))  JQ
+        ev.target.appendChild(document.getElementById(data));
+    }
+</script>
+<script language="javascript">
+    function playPause() {
+        if (myVideo.paused)
+            myVideo.play();
+        else
+            myVideo.pause();
+    } 
+</script>

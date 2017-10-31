@@ -1,0 +1,38 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <title></title>
+
+</head>
+<body>
+<canvas id="myCanvas" width="200" height="100">
+Your browser does not support the canvas element.
+</canvas>
+<canvas id="myCanvas2" width="200" height="100">
+Your browser does not support the canvas element.
+</canvas>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="190">
+  <polygon points="100,10 40,180 190,60 10,60 160,180"
+  style="fill:lime;stroke:purple;stroke-width:5;fill-rule:evenodd;" />
+</svg>
+</body>
+    <script type="text/javascript">
+        var c = document.getElementById("myCanvas");
+        var cxt = c.getContext("2d");
+        cxt.fillStyle = "#FF0000";
+        cxt.fillRect(0, 0, 150, 75);
+    </script>
+
+<script type="text/javascript">
+
+    var c = document.getElementById("myCanvas2");
+    var cxt = c.getContext("2d");
+    cxt.fillStyle = "#FF0000";
+    cxt.beginPath();
+    cxt.arc(70, 18, 15, 0, Math.PI * 2, true);
+    cxt.closePath();
+    cxt.fill();
+
+</script>
+
+</html>
